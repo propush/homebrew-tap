@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Audit casks
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          casks=(Casks/*.rb)
+          if [ "${#casks[@]}" -eq 0 ]; then
+            echo "no casks to audit yet"
+            exit 0
+          fi
+          brew style "${casks[@]}"
+          brew untap propush/tap 2>/dev/null || true
+          brew tap-new propush/tap
+          tap_dir="$(brew --repository propush/tap)"
+          mkdir -p "$tap_dir/Casks"
+          cp "${casks[@]}" "$tap_dir/Casks/"
+          tokens=()
+          for cask in "${casks[@]}"; do
+            tokens+=("propush/tap/$(basename "$cask" .rb)")
+          done
+          brew audit --cask --strict "${tokens[@]}"
