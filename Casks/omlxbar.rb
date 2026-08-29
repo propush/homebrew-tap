@@ -15,9 +15,10 @@ cask "omlxbar" do
   zap trash: "~/Library/Preferences/com.pushkin.omlxbar.plist"
 
   caveats <<~EOS
-    Before first launch, remove macOS quarantine from omlxbar and start it:
+    omlxbar is ad-hoc signed and is not notarized by Apple. To approve its first launch:
 
-      xattr -dr com.apple.quarantine /Applications/omlxbar.app
-      open -a omlxbar
+      1. Run: open -a omlxbar
+      2. Open System Settings > Privacy & Security.
+      3. Click Open Anyway for omlxbar, then confirm Open.
   EOS
 end
