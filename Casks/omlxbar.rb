@@ -1,6 +1,6 @@
 cask "omlxbar" do
-  version "1.2.0"
-  sha256 "18aba2f1f128d295cc14f9593f9d5ba18f62e8cb412bb85f760705fc79f656e2"
+  version "1.2.1"
+  sha256 "16f42e335dc2eaa75651b94788cd4e0c1ce11d91e91d02aaa786d71d6864943f"
 
   url "https://github.com/propush/omlxbar/releases/download/v#{version}/omlxbar-#{version}-arm64.zip"
   name "omlxbar"
